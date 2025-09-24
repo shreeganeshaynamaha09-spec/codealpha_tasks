@@ -1,0 +1,138 @@
+<!-- This new structure includes a sidebar navigation for a more professional feel -->
+<div class="admin-layout">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="logo-icon">RV</span>
+      <h1 class="logo-text">ROYAL VILLAAS</h1>
+      <span class="logo-subtext">Admin Panel</span>
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item" [class.active]="activeTab === 'bookings'" (click)="switchTab('bookings')">
+        <span class="nav-icon">📅</span>
+        Manage Bookings
+      </button>
+      <button class="nav-item" [class.active]="activeTab === 'rooms'" (click)="switchTab('rooms')">
+        <span class="nav-icon">🏨</span>
+        Manage Rooms
+      </button>
+    </nav>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <!-- ====== Manage Bookings Tab ====== -->
+    <div *ngIf="activeTab === 'bookings'" class="tab-content">
+      <h2>Pending Reservations</h2>
+      <p class="section-description">Review and assign rooms for new booking requests.</p>
+      <div *ngIf="pendingBookings.length > 0; else noPending" class="booking-list">
+        <div *ngFor="let booking of pendingBookings" class="booking-card">
+          <div class="card-header">
+            <h3>Request #{{ booking.id }}</h3>
+            <span class="status-pill status-pending">Pending</span>
+          </div>
+          <div class="card-body">
+            <p><strong>User:</strong> {{ booking.user.name }} ({{ booking.user.email }})</p>
+            <p><strong>Requested:</strong> {{ booking.requestedCategory }}</p>
+            <p><strong>Dates:</strong> {{ booking.checkInDate }} to {{ booking.checkOutDate }}</p>
+          </div>
+          <div class="card-footer assignment-form">
+            <select [(ngModel)]="booking.selectedRoomId">
+              <option [ngValue]="null" disabled>Select an available room...</option>
+              <option *ngFor="let room of getAvailableRoomsForBooking(booking)" [value]="room.id">
+                Room {{ room.roomNumber }} ({{ room.pricePerNight | currency:'INR' }})
+              </option>
+            </select>
+            <div class="assignment-actions">
+              <button class="btn btn-confirm" [disabled]="!booking.selectedRoomId" (click)="confirmBooking(booking.id, booking.selectedRoomId)">
+                Confirm & Assign
+              </button>
+              <button class="btn btn-reject" (click)="rejectBooking(booking.id)">Reject</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noPending> <p class="empty-state">No pending reservations to review.</p> </ng-template>
+
+      <hr class="section-divider">
+
+      <h2>All Reservations History</h2>
+      <p class="section-description">A complete log of all bookings in the system.</p>
+      <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Dates</th>
+              <th>Category</th>
+              <th>Room</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of allBookings">
+              <td>#{{ booking.id }}</td>
+              <td>{{ booking.user.name }}</td>
+              <td>{{ booking.checkInDate }} to {{ booking.checkOutDate }}</td>
+              <td>{{ booking.requestedCategory }}</td>
+              <td>{{ booking.room ? booking.room.roomNumber : 'N/A' }}</td>
+              <td><span class="status-pill status-{{ booking.status?.toLowerCase() }}">{{ booking.status }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ====== Manage Rooms Tab ====== -->
+    <div *ngIf="activeTab === 'rooms'" class="tab-content">
+      <h2>Add New Room</h2>
+      <p class="section-description">Expand the hotel's inventory by adding a new room.</p>
+      <form class="add-room-form" (ngSubmit)="addRoom()" #roomForm="ngForm">
+          <input type="text" placeholder="Room Number (e.g., 101)" name="roomNumber" [(ngModel)]="newRoom.roomNumber" required>
+          <select name="category" [(ngModel)]="newRoom.category" required>
+            <option value="STANDARD">Standard</option>
+            <option value="DELUXE">Deluxe</option>
+            <option value="SUITE">Suite</option>
+          </select>
+          <input type="number" placeholder="Price per Night" name="pricePerNight" [(ngModel)]="newRoom.pricePerNight" required>
+          <select name="status" [(ngModel)]="newRoom.status" required>
+            <option value="AVAILABLE">Available</option>
+            <option value="MAINTENANCE">Maintenance</option>
+          </select>
+          <button class="btn btn-primary" type="submit" [disabled]="!roomForm.form.valid">Add Room</button>
+      </form>
+      
+      <hr class="section-divider">
+
+      <h2>Hotel Room Inventory</h2>
+      <p class="section-description">View and manage all rooms in the system.</p>
+       <div class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Room #</th>
+              <th>Category</th>
+              <th>Price/Night</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let room of allRooms">
+              <td>{{ room.roomNumber }}</td>
+              <td>{{ room.category }}</td>
+              <td>{{ room.pricePerNight | currency:'INR' }}</td>
+              <td><span class="status-pill status-{{ room.status?.toLowerCase() }}">{{ room.status }}</span></td>
+              <td class="actions">
+                <button class="btn-icon btn-edit" (click)="editRoom(room)" title="Edit Room">✏️</button>
+                <button class="btn-icon btn-delete" (click)="deleteRoom(room.id)" title="Delete Room">🗑️</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+

@@ -1,0 +1,116 @@
+/* Apply a new, lighter background for the login page */
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  /* A bright, welcoming hotel interior */
+  background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto-format&fit=crop');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Lato', 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+/* ENHANCED: Light grey "glassmorphism" container */
+.container {
+  max-width: 450px;
+  width: 100%;
+  padding: 40px;
+  background: rgba(240, 242, 245, 0.9); /* Light grey translucent background */
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Heading style using the dark brand color for contrast */
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #1a2a4c; /* Dark blue from the theme */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5em;
+}
+
+/* Form element styling for a light background */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333; /* Dark text for labels */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.7); /* Brighter input background */
+  border: 1px solid #ccc;
+  color: #333; /* Dark text for input */
+  border-radius: 5px;
+  font-size: 1em;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* ENHANCED: Button with gradient and hover effect */
+button {
+  width: 100%;
+  padding: 12px;
+  background-image: linear-gradient(to right, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+button:hover {
+  background-image: linear-gradient(to right, #0056b3, #004085);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+button:disabled {
+  background-image: none;
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Message box for feedback */
+.message {
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.message.success {
+  background-color: #e7f4e8;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+

@@ -1,0 +1,94 @@
+<!-- Main component container with a subtle background -->
+<div class="dashboard-wrapper">
+  
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>Welcome, {{ userName }}!</h1>
+      <p>This is your personal dashboard for ROYAL VILLAAS. Manage your reservations and plan your next stay with us.</p>
+    </div>
+  </header>
+
+  <div class="dashboard-container">
+    <!-- Modern Tab Navigation -->
+    <div class="tabs">
+      <button [class.active]="activeTab === 'book'" (click)="switchTab('book')">
+        <span class="tab-icon">📅</span> Book a New Stay
+      </button>
+      <button [class.active]="activeTab === 'view'" (click)="switchTab('view')">
+        <span class="tab-icon">🏨</span> My Bookings
+      </button>
+    </div>
+
+    <!-- ====== Book a Reservation Tab ====== -->
+    <div *ngIf="activeTab === 'book'" class="tab-content">
+      <h2>Find Your Perfect Room</h2>
+      <form (ngSubmit)="searchAvailability()" #bookingForm="ngForm" class="search-form">
+        <div class="form-group">
+          <label for="checkIn">Check-in Date</label>
+          <input type="date" name="checkIn" [(ngModel)]="searchRequest.checkIn" required>
+        </div>
+        <div class="form-group">
+          <label for="checkOut">Check-out Date</label>
+          <input type="date" name="checkOut" [(ngModel)]="searchRequest.checkOut" required>
+        </div>
+        <button type="submit" [disabled]="!bookingForm.form.valid">Check Availability</button>
+      </form>
+
+      <div *ngIf="availabilityResults.length > 0" class="results-list">
+        <h3>Availability Found!</h3>
+        <ul>
+          <li *ngFor="let result of availabilityResults">
+            <span class="result-info">
+              <span class="category-icon">🏨</span>
+              <strong>{{ result.category }} Rooms:</strong> 
+              <span>{{ result.availableCount }} available</span>
+            </span>
+            <button class="book-button" (click)="bookCategory(result.category)">
+              Request Booking
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ====== My Bookings Tab ====== -->
+    <div *ngIf="activeTab === 'view'" class="tab-content">
+      <h2>My Booking History</h2>
+      <div *ngIf="myBookings.length > 0; else noBookings" class="booking-grid">
+        <!-- Redesigned Booking Card -->
+        <div *ngFor="let booking of myBookings" class="booking-card">
+          <div class="card-header">
+             <h3>Booking #{{ booking.id }}</h3>
+             <span class="status-pill status-{{ booking.status?.toLowerCase() }}">{{ booking.status }}</span>
+          </div>
+          <div class="card-body">
+            <div class="booking-detail">
+              <span class="detail-icon">🏷️</span>
+              <span><strong>Category:</strong> {{ booking.requestedCategory }}</span>
+            </div>
+            <div class="booking-detail">
+              <span class="detail-icon">🚪</span>
+               <span><strong>Assigned Room:</strong> {{ booking.room ? booking.room.roomNumber : 'Pending Assignment' }}</span>
+            </div>
+             <div class="booking-detail">
+              <span class="detail-icon">🗓️</span>
+              <span><strong>Dates:</strong> {{ booking.checkInDate }} to {{ booking.checkOutDate }}</span>
+            </div>
+             <div class="booking-detail">
+              <span class="detail-icon">💰</span>
+               <span><strong>Total Cost:</strong> {{ booking.totalCost | currency:'INR' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noBookings>
+        <p class="empty-state">You have no past or upcoming bookings. Why not plan your next getaway?</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+<!-- Footer Section -->
+<footer class="dashboard-footer">
+  <p>&copy; 2024 ROYAL VILLAAS. All rights reserved.</p>
+</footer>

@@ -1,0 +1,155 @@
+<!-- NOTE: For icons to display, add this line to your main index.html file: -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"> -->
+
+<div class="landing-page">
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">ROYAL VILLAAS</div>
+    <nav class="main-nav">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#rooms">Rooms</a>
+      <a (click)="redirectToLogin()">Sign In</a>
+      <a (click)="redirectToRegister()" class="nav-button">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section with Booking Form -->
+  <main class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Luxury Redefined</h1>
+      <p>Experience the elegance and comfort of ROYAL VILLAAS.</p>
+      
+      <!-- Existing Booking Form is Integrated Here -->
+      <div class="booking-form-container">
+        <h3>Book Your Stay</h3>
+        <form (ngSubmit)="searchAvailability()" #bookingForm="ngForm" class="booking-form">
+          <div class="form-group">
+            <label for="checkIn">Check-in</label>
+            <input type="date" id="checkIn" name="checkIn" [(ngModel)]="searchRequest.checkIn" required>
+          </div>
+          <div class="form-group">
+            <label for="checkOut">Check-out</label>
+            <input type="date" id="checkOut" name="checkOut" [(ngModel)]="searchRequest.checkOut" required>
+          </div>
+          <button type="submit" [disabled]="!bookingForm.form.valid">Check Availability</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Availability Results Section (Dynamically Shown) -->
+  <section class="results-section" *ngIf="availabilityResults.length > 0">
+    <div class="container">
+      <h2>Availability for Your Dates</h2>
+      <ul class="results-list">
+        <li *ngFor="let result of availabilityResults">
+          <span>{{ result.category }} Rooms</span>
+          <strong>{{ result.availableCount }} available</strong>
+        </li>
+      </ul>
+      <div class="cta-section">
+        <p>Ready to book? Please sign in or create an account.</p>
+        <div class="cta-buttons">
+          <button (click)="redirectToLogin()">Login to Book</button>
+          <button class="btn-secondary" (click)="redirectToRegister()">New User? Register</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="https://images.unsplash.com/photo-1549294413-26f195200c16?q=80&w=1965&auto=format&fit=crop" alt="Hotel Interior" class="img-responsive">
+        </div>
+        <div class="col-md-6">
+          <h2>Discover the Royal Villaas Experience</h2>
+          <p>Welcome to Royal Villaas, where extraordinary accommodations meet unmatched service. Our luxury hotels offer an unparalleled escape from the ordinary — blending elegance, comfort, and adventure for the ultimate stay.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="section dark-section text-center">
+    <div class="container">
+      <h2>Core Features</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <i class="feature-icon ri-thumb-up-line"></i>
+          <h4>High Rating</h4>
+          <p>Consistently excellent reviews and guest satisfaction.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="feature-icon ri-map-pin-line"></i>
+          <h4>Best Location</h4>
+          <p>Prime locations with easy access to city attractions.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="feature-icon ri-close-circle-line"></i>
+          <h4>Free Cancellation</h4>
+          <p>Change your plans easily with our flexible booking policies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rooms Section -->
+  <section id="rooms" class="section text-center">
+    <div class="container">
+      <h2>Hand Picked Rooms</h2>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="room-card">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop" alt="Standard Room" class="img-responsive">
+            <div class="room-caption"><h4>Standard Room</h4></div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="room-card">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?q=80&w=2070&auto=format&fit=crop" alt="Deluxe Room" class="img-responsive">
+            <div class="room-caption"><h4>Deluxe Room</h4></div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="room-card">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.xMZ1M_6zDTHMR1R8csGhTwHaE7?w=1400&h=933&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Suite" class="img-responsive">
+            <div class="room-caption"><h4>Suite</h4></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h4>ROYAL VILLAAS</h4>
+          <p>Experience premium stays, fine dining, and world-class service.</p>
+        </div>
+        <div class="col-md-4">
+          <h4>Contact Info</h4>
+          <p>123 Royal Street, Luxury City, India</p>
+          <p>inforoyalvillaas.com</p>
+        </div>
+        <div class="col-md-4">
+          <h4>Follow Us</h4>
+          <div class="social-icons">
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+            <a href="#"><i class="ri-instagram-fill"></i></a>
+            <a href="#"><i class="ri-twitter-fill"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <p class="text-center">&copy; 2025 ROYAL VILLAAS. All Rights Reserved.</p>
+    </div>
+  </footer>
+</div>
+
