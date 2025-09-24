@@ -1,0 +1,13 @@
+com\example\demo\DemoApplication.class
+com\example\demo\ChatController.class
+com\example\demo\GeminiCandidate.class
+com\example\demo\GeminiPart.class
+com\example\demo\GeminiRequest.class
+com\example\demo\GeminiResponse.class
+com\example\demo\ChatResponse.class
+com\example\demo\GeminiAiService.class
+com\example\demo\WebConfig.class
+com\example\demo\PageController.class
+com\example\demo\Faq.class
+com\example\demo\ChatRequest.class
+com\example\demo\GeminiContent.class

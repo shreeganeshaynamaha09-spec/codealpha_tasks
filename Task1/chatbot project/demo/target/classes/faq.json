@@ -1,0 +1,22 @@
+[
+  {
+    "intent": "greeting",
+    "keywords": ["hello", "hi", "hey", "greetings"],
+    "answer": "Hello! How can I help you today?"
+  },
+  {
+    "intent": "opening_hours",
+    "keywords": ["hours", "open", "when", "close", "time"],
+    "answer": "We are open from 9 AM to 5 PM, Monday to Friday."
+  },
+  {
+    "intent": "location",
+    "keywords": ["where", "location", "address", "find you"],
+    "answer": "You can find us at 123 Tech Avenue, Silicon Valley."
+  },
+  {
+    "intent": "fallback",
+    "keywords": [],
+    "answer": "I'm sorry, I don't understand that. Can you please rephrase?"
+  }
+]
